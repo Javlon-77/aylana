@@ -3,495 +3,403 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top-3 Omad G'ildiragi 🏆</title>
-    <!-- Canvas Confetti chiroyli pirotexnika effekti uchun -->
-    <script src="https://javlon.gildirak/"></script>
+    <title>Top-3 G'oliblar G'ildiragi 🏆</title>
     <style>
         :root {
-            --bg-color: #090d16;
-            --card-bg: #111827;
+            --bg-color: #0f1319;
+            --card-bg: #171d26;
             --accent-color: #f59e0b;
             --text-color: #f3f4f6;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
-        }
-
         body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
+            margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            box-sizing: border-box;
         }
-
         .main-container {
             display: flex;
-            flex-direction: row;
-            gap: 40px;
-            background-color: var(--card-bg);
+            flex-wrap: wrap;
+            background: var(--card-bg);
             padding: 30px;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(245, 158, 11, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             max-width: 1000px;
             width: 100%;
+            gap: 40px;
             align-items: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            justify-content: center;
         }
-
-        @media (max-width: 900px) {
-            .main-container {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        /* G'ildirak bo'limi */
-        .wheel-section {
+        /* G'ildirak vizuali */
+        .wheel-box {
             position: relative;
+            width: 400px;
+            height: 400px;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex: 1.2;
         }
-
         .pointer {
             position: absolute;
-            top: -15px;
+            top: -5px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
             border-top: 35px solid #ef4444;
             z-index: 10;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
         }
-
         canvas {
+            border: 8px solid #2d3748;
             border-radius: 50%;
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), 0 0 0 10px #1f2937;
-            transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-
-        .center-circle {
+        .center-btn {
             position: absolute;
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(circle, #ffffff 0%, #d1d5db 100%);
+            width: 65px;
+            height: 65px;
+            background: white;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             font-weight: bold;
-            color: #090d16;
-            font-size: 0.9rem;
+            color: #111;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            border: 4px solid #2d3748;
             user-select: none;
             z-index: 5;
-            border: 3px solid #1f2937;
         }
-
-        /* Boshqaruv bo'limi */
-        .control-section {
+        /* O'ng tomon paneli */
+        .control-panel {
             flex: 1;
+            min-width: 300px;
             display: flex;
             flex-direction: column;
             gap: 20px;
-            width: 100%;
         }
-
         h1 {
-            font-size: 2rem;
-            background: linear-gradient(45deg, #f59e0b, #ef4444, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
+            margin: 0;
+            font-size: 32px;
+            color: var(--text-color);
         }
-
+        h1 span { color: #3b82f6; }
+        .subtitle {
+            margin: -10px 0 10px 0;
+            color: #94a3b8;
+            font-size: 15px;
+        }
         textarea {
             width: 100%;
             height: 120px;
-            background-color: #090d16;
-            border: 2px solid #374151;
-            border-radius: 14px;
+            background: #0f141c;
+            border: 2px solid #2d3748;
+            border-radius: 10px;
+            color: white;
             padding: 12px;
-            color: var(--text-color);
-            font-size: 0.95rem;
+            font-size: 16px;
             resize: none;
+            box-sizing: border-box;
             outline: none;
-            transition: border-color 0.3s;
         }
-
-        textarea:focus {
-            border-color: var(--accent-color);
-        }
-
-        .spin-btn {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #090d16;
+        textarea:focus { border-color: #3b82f6; }
+        .action-btn {
+            background: #2e3746;
+            color: #94a3b8;
             border: none;
-            padding: 14px;
-            font-size: 1.1rem;
-            font-weight: 800;
-            border-radius: 14px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+            letter-spacing: 1px;
+            transition: 0.3s;
         }
-
-        .spin-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.5);
+        .action-btn.active {
+            background: #2563eb;
+            color: white;
         }
-
-        .spin-btn:disabled {
-            background: #374151;
-            color: #6b7280;
-            cursor: not-allowed;
-            box-shadow: none;
+        .action-btn.active:hover { background: #1d4ed8; }
+        
+        .status-text {
+            color: #3b82f6;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 27px;
+            font-weight: 500;
         }
-
-        /* Shohsupa (Podium) dizayni */
+        /* Shoxsupa qismi */
         .podium-container {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             align-items: flex-end;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 15px 10px;
-            min-height: 160px;
+            gap: 15px;
             margin-top: 10px;
+            height: 150px;
         }
-
         .podium-place {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 30%;
+            width: 90px;
         }
-
         .podium-name {
-            font-size: 0.9rem;
+            font-size: 16px;
             font-weight: bold;
-            text-align: center;
             margin-bottom: 8px;
+            text-align: center;
             min-height: 24px;
-            color: #9ca3af;
-            word-break: break-all;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-
-        .podium-block {
+        .podium-bar {
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
+            font-size: 24px;
             font-weight: bold;
-            border-radius: 8px 8px 0 0;
-            color: #090d16;
+            color: #111;
+            border-radius: 6px 6px 0 0;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: height 0.5s ease-out;
         }
+        .p2 .podium-bar { background: #cbd5e1; height: 60px; }
+        .p1 .podium-bar { background: #f59e0b; height: 90px; }
+        .p3 .podium-bar { background: #ea580c; height: 40px; color: white; }
+        .p2 .podium-name { color: #cbd5e1; }
+        .p1 .podium-name { color: #f59e0b; }
+        .p3 .podium-name { color: #ea580c; }
 
-        /* O'rinlar uchun har xil balandlik va ranglar */
-        .place-2 .podium-block {
-            height: 50px;
-            background: linear-gradient(to top, #94a3b8, #cbd5e1); /* Kumush */
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid transparent;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
         }
-        .place-1 .podium-block {
-            height: 80px;
-            background: linear-gradient(to top, #d97706, #fcd34d); /* Oltin */
-        }
-        .place-3 .podium-block {
-            height: 35px;
-            background: linear-gradient(to top, #b45309, #f97316); /* Bronza */
-        }
-
-        .current-status {
-            text-align: center;
-            font-weight: bold;
-            color: #60a5fa;
-            font-size: 1.1rem;
-            min-height: 27px;
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div class="main-container">
-    <!-- Chap tomon: G'ildirak -->
-    <div class="wheel-section">
-        <div class="pointer"></div>
-        <canvas id="wheelCanvas" width="400" height="400"></canvas>
-        <div class="center-circle" onclick="startTournament()">GO!</div>
-    </div>
-
-    <!-- O'ng tomon: Boshqaruv va Shohsupa -->
-    <div class="control-section">
-        <div>
-            <h1>Top-3 G'oliblar G'ildiragi</h1>
-            <p style="color: #6b7280; margin-top: 5px;">Ismlarni kiriting va ketma-ket 3 ta o'rinni aniqlang!</p>
+    <div class="main-container">
+        <div class="wheel-box">
+            <div class="pointer"></div>
+            <canvas id="wheelCanvas" width="390" height="390"></canvas>
+            <div class="center-btn" id="centerGoBtn" onclick="startFullLottery()">GO!</div>
         </div>
 
-        <textarea id="optionsInput" oninput="drawWheel()">Jasur&#10;Malika&#10;Sardor&#10;Kamola&#10;Diyor&#10;Madina&#10;Bobur&#10;Lola</textarea>
+        <div class="control-panel">
+            <h1>Top-3 G'oliblar <span>G'ildiragi</span></h1>
+            <div class="subtitle">Ismlarni kiriting va ketma-ket 3 ta o'rinni aniqlang!</div>
+            
+            <textarea id="namesTextarea" oninput="onNamesChange()">Jasur\nMalika\nSardor\nKamola\nDiyor\nMadina\nBobur\nLola</textarea>
+            
+            <button class="action-btn active" id="startBtn" onclick="startFullLottery()">Musobaqani Boshlash! 🏆</button>
 
-        <button class="spin-btn" id="spinBtn" onclick="startTournament()">Musobaqani Boshlash! 🏆</button>
-
-        <div class="current-status" id="statusBox">Tayyormisiz? Tugmani bosing!</div>
-
-        <!-- Shohsupa (Podium) -->
-        <div class="podium-container">
-            <!-- 2-O'rin -->
-            <div class="podium-place place-2">
-                <div class="podium-name" id="name-2">-</div>
-                <div class="podium-block">2</div>
+            <div class="status-text">
+                <div class="spinner" id="statusSpinner"></div>
+                <span id="statusMessage"></span>
             </div>
-            <!-- 1-O'rin -->
-            <div class="podium-place place-1">
-                <div class="podium-name" id="name-1">-</div>
-                <div class="podium-block">1</div>
-            </div>
-            <!-- 3-O'rin -->
-            <div class="podium-place place-3">
-                <div class="podium-name" id="name-3">-</div>
-                <div class="podium-block">3</div>
+
+            <div class="podium-container">
+                <div class="podium-place p2">
+                    <div class="podium-name" id="namePlace2">-</div>
+                    <div class="podium-bar">2</div>
+                </div>
+                <div class="podium-place p1">
+                    <div class="podium-name" id="namePlace1">-</div>
+                    <div class="podium-bar">1</div>
+                </div>
+                <div class="podium-place p3">
+                    <div class="podium-name" id="namePlace3">-</div>
+                    <div class="podium-bar">3</div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    const canvas = document.getElementById('wheelCanvas');
-    const ctx = canvas.getContext('2d');
-    const optionsInput = document.getElementById('optionsInput');
-    const spinBtn = document.getElementById('spinBtn');
-    const statusBox = document.getElementById('statusBox');
+    <script>
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const textarea = document.getElementById('namesTextarea');
+        
+        let names = [];
+        const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#14b8a6'];
+        let isSpinning = false;
+        let currentRotation = 0;
 
-    const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#14b8a6'];
+        // OVOZLAR
+        const spinAudio = new Audio('https://mixkit.co');
+        const winAudio = new Audio('https://mixkit.co');
+        spinAudio.loop = true;
 
-    let currentRotation = 0;
-    let isSpinning = false;
-    let audioCtx = null;
-
-    let activeParticipants = [];
-    let currentPlaceToDraw = 3; // Biz 3-o'rindan boshlab aniqlaymiz (3 -> 2 -> 1)
-
-    function initAudio() {
-        if (!audioCtx) {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-    }
-
-    function playTickSound() {
-        initAudio();
-        if (!audioCtx) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.06);
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.06);
-    }
-
-    function playWinSound(place) {
-        initAudio();
-        if (!audioCtx) return;
-
-        // Har bir o'rin uchun har xil g'alaba ohangi
-        const freqs = place === 1 ? [523.25, 659.25, 783.99, 1046.50] : [392.00, 493.88, 587.33, 783.99];
-        freqs.forEach((freq, index) => {
-            setTimeout(() => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.4);
-            }, index * 100);
-        });
-    }
-
-    function getOptions() {
-        return optionsInput.value.split('\n')
-            .map(opt => opt.trim())
-            .filter(opt => opt.length > 0);
-    }
-
-    function drawWheel() {
-        // Agar o'yin ketayotgan bo'lsa, qo'lda yozilgan yangi ro'yxat chizilmaydi
-        const list = isSpinning ? activeParticipants : getOptions();
-        const numSegments = list.length;
-        const radius = canvas.width / 2;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        if (numSegments === 0) {
-            ctx.fillStyle = '#6b7280';
-            ctx.font = '16px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText("Ro'yxat bo'sh...", radius, radius);
-            return;
+        function init() {
+            onNamesChange();
         }
 
-        const arcSize = (2 * Math.PI) / numSegments;
+        function onNamesChange() {
+            names = textarea.value.split('\n')
+                                  .map(name => name.trim())
+                                  .filter(name => name !== "");
+            drawWheel(0);
+        }
 
-        for (let i = 0; i < numSegments; i++) {
-            const angle = i * arcSize;
-            ctx.fillStyle = colors[i % colors.length];
-            ctx.beginPath();
-            ctx.moveTo(radius, radius);
-            ctx.arc(radius, radius, radius - 5, angle, angle + arcSize);
-            ctx.closePath();
-            ctx.fill();
+        // Tahrirlangan va muammosi to'g'rilangan G'ildirak chizish funksiyasi
+        function drawWheel(currentAngle) {
+            const numSegments = names.length;
+            if (numSegments === 0) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                return;
+            }
+            const segmentAngle = (2 * Math.PI) / numSegments;
 
-            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
-            ctx.translate(radius, radius);
-            ctx.rotate(angle + arcSize / 2);
-            ctx.textAlign = 'right';
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 13px sans-serif';
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            ctx.rotate(currentAngle);
 
-            let text = list[i];
-            if (text.length > 12) text = text.substring(0, 10) + '...';
+            for (let i = 0; i < numSegments; i++) {
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, canvas.width / 2, i * segmentAngle, (i + 1) * segmentAngle);
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fill();
+                ctx.stroke();
 
-            ctx.fillText(text, radius - 20, 5);
+                ctx.save();
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 14px sans-serif';
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                ctx.rotate(i * segmentAngle + segmentAngle / 2);
+                // TUZATILGAN JOYI: Faqatgina joriy element ismi yoziladi
+                ctx.fillText(names[i], canvas.width / 2 - 20, 0);
+                ctx.restore();
+            }
             ctx.restore();
         }
-    }
 
-    // Butun turnirni (3 ta o'rinni) boshqaradigan asosiy funksiya
-    function startTournament() {
-        if (isSpinning) return;
-
-        activeParticipants = getOptions();
-        if (activeParticipants.length < 3) {
-            alert("Iltimos, kamida 3 ta ishtirokchi kiriting!");
-            return;
+        function randomRange(min, max) {
+            return Math.random() * (max - min) + min;
         }
 
-        // Doskani tozalash
-        document.getElementById('name-1').innerText = '-';
-        document.getElementById('name-2').innerText = '-';
-        document.getElementById('name-3').innerText = '-';
-
-        currentPlaceToDraw = 3; // 3-o'rindan boshlaymiz
-        runSingleSpin();
+        function startFullLottery() {
+            if (isSpinning) return;
+            if (names.length < 3) {
+        alert("Iltimos, g'olibni aniqlash uchun kamida 3 ta ism kiriting!");
+        return;
     }
 
-    // Bitta aylantirish bosqichi
-    function runSingleSpin() {
-        isSpinning = true;
-        spinBtn.disabled = true;
-        optionsInput.disabled = true;
+    isSpinning = true;
+    toggleButtons(false);
+    
+    document.getElementById('namePlace1').innerText = "-";
+    document.getElementById('namePlace2').innerText = "-";
+    document.getElementById('namePlace3').innerText = "-";
 
-        statusBox.innerText = `🌀 ${currentPlaceToDraw}-o'rin aniqlanmoqda...`;
+    let pool = [...names];
+    let shuffled = pool.sort(() => 0.5 - Math.random());
+    let winner3 = shuffled[0];
+    let winner2 = shuffled[1];
+    let winner1 = shuffled[2];
 
-        const numSegments = activeParticipants.length;
-        const arcSize = 360 / numSegments;
-        const spinAngle = Math.floor(Math.random() * 360) + 1440; // ~4 marta to'liq aylanadi
-        const targetRotation = currentRotation + spinAngle;
-
-        const startTime = performance.now();
-        const duration = 4000; // Har bir aylanish 4 soniya
-        let lastTickAngle = 0;
-
-        function animate(timestamp) {
-            const elapsed = timestamp - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easeOut = 1 - Math.pow(1 - progress, 3);
-
-            const currentAngle = currentRotation + (spinAngle * easeOut);
-            canvas.style.transform = `rotate(${currentAngle}deg)`;
-
-            const segmentProgress = Math.floor(currentAngle / arcSize);
-            if (segmentProgress !== lastTickAngle) {
-                playTickSound();
-                lastTickAngle = segmentProgress;
-            }
-
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            } else {
-                currentRotation = targetRotation % 360;
-
-                // G'olib indeksini hisoblash
-                const normalizedAngle = (360 - (currentRotation % 360) + 270) % 360;
-                const winnerIndex = Math.floor(normalizedAngle / arcSize) % numSegments;
-                const winner = activeParticipants[winnerIndex];
-
-                // Shohsupaga yozish va effektlar
-                document.getElementById(`name-${currentPlaceToDraw}`).innerText = winner;
-                document.getElementById(`name-${currentPlaceToDraw}`).style.color =
-                    currentPlaceToDraw === 1 ? '#fcd34d' : (currentPlaceToDraw === 2 ? '#cbd5e1' : '#f97316');
-
-                playWinSound(currentPlaceToDraw);
-
-                // Har bir g'olib chiqqanda konfetti
-                confetti({
-                    particleCount: 80,
-                    spread: 60,
-                    origin: { y: 0.6 }
-                });
-
-                // G'olibni ro'yxatdan o'chirib tashlaymiz (keyingi o'rinlar uchun qayta aylanmasligi uchun)
-                activeParticipants.splice(winnerIndex, 1);
-                drawWheel(); // G'ildirakni yangilangan ro'yxat bilan qayta chizamiz
-
+    // 3-o'rinni aniqlash
+    animateSpinStep(winner3, "3-o'rin aniqlanmoqda...", (found3) => {
+        document.getElementById('namePlace3').innerText = found3;
+        winAudio.play();
+        
+        // 2-o'rinni aniqlash
+        setTimeout(() => {
+            animateSpinStep(winner2, "2-o'rin aniqlanmoqda...", (found2) => {
+                document.getElementById('namePlace2').innerText = found2;
+                winAudio.play();
+                
+                // 1-o'rinni aniqlash
                 setTimeout(() => {
-                    if (currentPlaceToDraw > 1) {
-                        currentPlaceToDraw--;
-                        runSingleSpin(); // Navbatdagi o'ringa o'tamiz
-                    } else {
-                        // Hamma o'rinlar aniqlandi!
-                        statusBox.innerText = "🏆 Musobaqa yakunlandi! Tabriklaymiz! 🏆";
-
-                        // Final super konfetti portlashi!
-                        let end = Date.now() + (2 * 1000);
-                        (function frame() {
-                            confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-                            confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
-                            if (Date.now() < end) {
-                                requestAnimationFrame(frame);
-                            }
-                        }());
-
+                    animateSpinStep(winner1, "1-o'rin (Bosh g'olib) aniqlanmoqda...", (found1) => {
+                        document.getElementById('namePlace1').innerText = found1;
+                        winAudio.play();
+                        
+                        setStatus("", false);
                         isSpinning = false;
-                        spinBtn.disabled = false;
-                        optionsInput.disabled = false;
-                    }
-                }, 2000); // G'olib aniqlangandan keyin 2 soniya kutib keyingisiga o'tadi
-            }
+                        toggleButtons(true);
+                    });
+                }, 1500);
+            });
+        }, 1500);
+    });
+}
+
+function animateSpinStep(targetWinner, message, callback) {
+    setStatus(message, true);
+    spinAudio.play();
+
+    const targetIndex = names.indexOf(targetWinner);
+    const numSegments = names.length;
+    const segmentAngle = (2 * Math.PI) / numSegments;
+    
+    const targetAngleInSegment = segmentAngle / 2; 
+    const desiredAngle = (3 * Math.PI / 2) - (targetIndex * segmentAngle) - targetAngleInSegment;
+    
+    const extraRotations = 2 * Math.PI * randomRange(3, 5);
+    const finalRotation = currentRotation + extraRotations + (desiredAngle - (currentRotation % (2 * Math.PI)));
+
+    const startTime = performance.now();
+    const duration = 3000;
+
+    function update(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        const easeOutQuad = 1 - (1 - progress) * (1 - progress);
+        const currentAngle = currentRotation + (finalRotation - currentRotation) * easeOutQuad;
+        
+        drawWheel(currentAngle);
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        } else {
+            currentRotation = finalRotation;
+            spinAudio.pause();
+            spinAudio.currentTime = 0;
+            callback(targetWinner);
         }
-
-        requestAnimationFrame(animate);
     }
+    requestAnimationFrame(update);
+}
 
-    // Ilk yuklanganda g'ildirakni chizish
-    drawWheel();
-</script>
+function setStatus(text, showSpinner) {
+    document.getElementById('statusMessage').innerText = text;
+    document.getElementById('statusSpinner').style.display = showSpinner ? 'block' : 'none';
+}
 
-</body>
-</html>
+function toggleButtons(enable) {
+    const startBtn = document.getElementById('startBtn');
+    if (enable) {
+        startBtn.classList.add('active');
+        textarea.disabled = false;
+    } else {
+        startBtn.classList.remove('active');
+        textarea.disabled = true;
+    }
+}
+
+window.onload = init;
