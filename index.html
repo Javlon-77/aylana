@@ -130,8 +130,9 @@
             background: #2563eb;
             color: white;
         }
-        .action-btn.active:hover { background: #1d4ed8; }
-        
+        .action-btn.active:hover {
+            background: #1d4ed8;
+        }
         .status-text {
             color: #3b82f6;
             font-size: 18px;
@@ -184,7 +185,6 @@
         .p2 .podium-name { color: #cbd5e1; }
         .p1 .podium-name { color: #f59e0b; }
         .p3 .podium-name { color: #ea580c; }
-
         .spinner {
             width: 18px;
             height: 18px;
@@ -262,7 +262,6 @@
             drawWheel(0);
         }
 
-        // Tahrirlangan va muammosi to'g'rilangan G'ildirak chizish funksiyasi
         function drawWheel(currentAngle) {
             const numSegments = names.length;
             if (numSegments === 0) {
@@ -290,7 +289,6 @@
                 ctx.textAlign = 'right';
                 ctx.textBaseline = 'middle';
                 ctx.rotate(i * segmentAngle + segmentAngle / 2);
-                // TUZATILGAN JOYI: Faqatgina joriy element ismi yoziladi
                 ctx.fillText(names[i], canvas.width / 2 - 20, 0);
                 ctx.restore();
             }
@@ -304,102 +302,7 @@
         function startFullLottery() {
             if (isSpinning) return;
             if (names.length < 3) {
-        alert("Iltimos, g'olibni aniqlash uchun kamida 3 ta ism kiriting!");
-        return;
-    }
+                alert("Iltimos, g'olibni aniqlash uchun kamida 3 ta ism kiriting!");
+                return;
+            }
 
-    isSpinning = true;
-    toggleButtons(false);
-    
-    document.getElementById('namePlace1').innerText = "-";
-    document.getElementById('namePlace2').innerText = "-";
-    document.getElementById('namePlace3').innerText = "-";
-
-    let pool = [...names];
-    let shuffled = pool.sort(() => 0.5 - Math.random());
-    let winner3 = shuffled[0];
-    let winner2 = shuffled[1];
-    let winner1 = shuffled[2];
-
-    // 3-o'rinni aniqlash
-    animateSpinStep(winner3, "3-o'rin aniqlanmoqda...", (found3) => {
-        document.getElementById('namePlace3').innerText = found3;
-        winAudio.play();
-        
-        // 2-o'rinni aniqlash
-        setTimeout(() => {
-            animateSpinStep(winner2, "2-o'rin aniqlanmoqda...", (found2) => {
-                document.getElementById('namePlace2').innerText = found2;
-                winAudio.play();
-                
-                // 1-o'rinni aniqlash
-                setTimeout(() => {
-                    animateSpinStep(winner1, "1-o'rin (Bosh g'olib) aniqlanmoqda...", (found1) => {
-                        document.getElementById('namePlace1').innerText = found1;
-                        winAudio.play();
-                        
-                        setStatus("", false);
-                        isSpinning = false;
-                        toggleButtons(true);
-                    });
-                }, 1500);
-            });
-        }, 1500);
-    });
-}
-
-function animateSpinStep(targetWinner, message, callback) {
-    setStatus(message, true);
-    spinAudio.play();
-
-    const targetIndex = names.indexOf(targetWinner);
-    const numSegments = names.length;
-    const segmentAngle = (2 * Math.PI) / numSegments;
-    
-    const targetAngleInSegment = segmentAngle / 2; 
-    const desiredAngle = (3 * Math.PI / 2) - (targetIndex * segmentAngle) - targetAngleInSegment;
-    
-    const extraRotations = 2 * Math.PI * randomRange(3, 5);
-    const finalRotation = currentRotation + extraRotations + (desiredAngle - (currentRotation % (2 * Math.PI)));
-
-    const startTime = performance.now();
-    const duration = 3000;
-
-    function update(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        const easeOutQuad = 1 - (1 - progress) * (1 - progress);
-        const currentAngle = currentRotation + (finalRotation - currentRotation) * easeOutQuad;
-        
-        drawWheel(currentAngle);
-
-        if (progress < 1) {
-            requestAnimationFrame(update);
-        } else {
-            currentRotation = finalRotation;
-            spinAudio.pause();
-            spinAudio.currentTime = 0;
-            callback(targetWinner);
-        }
-    }
-    requestAnimationFrame(update);
-}
-
-function setStatus(text, showSpinner) {
-    document.getElementById('statusMessage').innerText = text;
-    document.getElementById('statusSpinner').style.display = showSpinner ? 'block' : 'none';
-}
-
-function toggleButtons(enable) {
-    const startBtn = document.getElementById('startBtn');
-    if (enable) {
-        startBtn.classList.add('active');
-        textarea.disabled = false;
-    } else {
-        startBtn.classList.remove('active');
-        textarea.disabled = true;
-    }
-}
-
-window.onload = init;
