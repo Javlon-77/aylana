@@ -28,63 +28,69 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
         }
 
         .main-container {
             display: flex;
             flex-direction: row;
-            gap: 40px;
+            gap: 30px;
             background-color: var(--card-bg);
-            padding: 30px;
+            padding: 25px;
             border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(245, 158, 11, 0.1);
-            max-width: 1000px;
+            max-width: 950px;
             width: 100%;
             align-items: center;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 850px) {
             .main-container {
                 flex-direction: column;
                 text-align: center;
+                padding: 15px;
             }
         }
 
-        /* G'ildirak bo'limi */
+        /* G'ildirak bo'limi mobilbop qilindi */
         .wheel-section {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
             flex: 1.2;
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
         }
 
         .pointer {
             position: absolute;
-            top: -15px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
             height: 0;
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
-            border-top: 35px solid #ef4444;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid #ef4444;
             z-index: 10;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
         }
 
         canvas {
+            width: 100% !important;
+            height: auto !important;
             border-radius: 50%;
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), 0 0 0 10px #1f2937;
-            transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.2), 0 0 0 8px #1f2937;
+            /* Ba'zi brauzerlardagi xatolikni oldini olish uchun CSS transition olib tashlandi */
         }
 
         .center-circle {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             background: radial-gradient(circle, #ffffff 0%, #d1d5db 100%);
             border-radius: 50%;
             display: flex;
@@ -94,7 +100,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             font-weight: bold;
             color: #090d16;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             user-select: none;
             z-index: 5;
             border: 3px solid #1f2937;
@@ -105,12 +111,12 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             width: 100%;
         }
 
         h1 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             background: linear-gradient(45deg, #f59e0b, #ef4444, #3b82f6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -119,7 +125,7 @@
 
         textarea {
             width: 100%;
-            height: 120px;
+            height: 100px;
             background-color: #090d16;
             border: 2px solid #374151;
             border-radius: 14px;
@@ -135,18 +141,24 @@
             border-color: var(--accent-color);
         }
 
+        textarea:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         .spin-btn {
             background: linear-gradient(135deg, #f59e0b, #d97706);
             color: #090d16;
             border: none;
             padding: 14px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 800;
             border-radius: 14px;
             cursor: pointer;
             text-transform: uppercase;
             transition: all 0.3s;
             box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+            -webkit-tap-highlight-color: transparent;
         }
 
         .spin-btn:hover:not(:disabled) {
@@ -155,10 +167,11 @@
         }
 
         .spin-btn:disabled {
-            background: #374151;
-            color: #6b7280;
+            background: #374151 !important;
+            color: #6b7280 !important;
             cursor: not-allowed;
             box-shadow: none;
+            transform: none;
         }
 
         /* Shohsupa (Podium) dizayni */
@@ -170,8 +183,8 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             padding: 15px 10px;
-            min-height: 160px;
-            margin-top: 10px;
+            min-height: 150px;
+            margin-top: 5px;
         }
 
         .podium-place {
@@ -182,13 +195,17 @@
         }
 
         .podium-name {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
             text-align: center;
             margin-bottom: 8px;
-            min-height: 24px;
+            min-height: 20px;
             color: #9ca3af;
             word-break: break-all;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
         }
 
         .podium-block {
@@ -196,34 +213,32 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             border-radius: 8px 8px 0 0;
             color: #090d16;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: height 0.5s ease-out;
         }
 
-        /* O'rinlar uchun har xil balandlik va ranglar */
         .place-2 .podium-block {
-            height: 50px;
-            background: linear-gradient(to top, #94a3b8, #cbd5e1); /* Kumush */
+            height: 45px;
+            background: linear-gradient(to top, #94a3b8, #cbd5e1);
         }
         .place-1 .podium-block {
-            height: 80px;
-            background: linear-gradient(to top, #d97706, #fcd34d); /* Oltin */
+            height: 75px;
+            background: linear-gradient(to top, #d97706, #fcd34d);
         }
         .place-3 .podium-block {
-            height: 35px;
-            background: linear-gradient(to top, #b45309, #f97316); /* Bronza */
+            height: 30px;
+            background: linear-gradient(to top, #b45309, #f97316);
         }
 
         .current-status {
             text-align: center;
             font-weight: bold;
             color: #60a5fa;
-            font-size: 1.1rem;
-            min-height: 27px;
+            font-size: 1rem;
+            min-height: 24px;
         }
     </style>
 </head>
@@ -234,23 +249,23 @@
     <div class="wheel-section">
         <div class="pointer"></div>
         <canvas id="wheelCanvas" width="400" height="400"></canvas>
-        <div class="center-circle" onclick="startTournament()">GO!</div>
+        <div class="center-circle" onclick="triggerTournament()">GO!</div>
     </div>
 
     <!-- O'ng tomon: Boshqaruv va Shohsupa -->
     <div class="control-section">
         <div>
             <h1>Top-3 G'oliblar G'ildiragi</h1>
-            <p style="color: #6b7280; margin-top: 5px;">Ismlarni kiriting va ketma-ket 3 ta o'rinni aniqlang!</p>
+            <p style="color: #6b7280; margin-top: 3px; font-size: 0.9rem;">Kamida 3 ta ism kiriting va o'rinlarni aniqlang!</p>
         </div>
 
-        <textarea id="optionsInput" oninput="drawWheel()">Jasur&#10;Malika&#10;Sardor&#10;Kamola&#10;Diyor&#10;Madina&#10;Bobur&#10;Lola</textarea>
+        <textarea id="optionsInput">Jasur&#10;Malika&#10;Sardor&#10;Kamola&#10;Diyor&#10;Madina&#10;Bobur&#10;Lola</textarea>
 
         <button class="spin-btn" id="spinBtn" onclick="startTournament()">Musobaqani Boshlash! 🏆</button>
 
         <div class="current-status" id="statusBox">Tayyormisiz? Tugmani bosing!</div>
 
-        <!-- Shohsupa (Podium) -->
+        <!-- Shohsupa -->
         <div class="podium-container">
             <!-- 2-O'rin -->
             <div class="podium-place place-2">
@@ -280,12 +295,12 @@
 
     const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#14b8a6'];
 
-    let currentRotation = 0;
+    let currentAngleRad = 0; // Radian o'lchovida saqlaymiz
     let isSpinning = false;
     let audioCtx = null;
     
     let activeParticipants = [];
-    let currentPlaceToDraw = 3; // Biz 3-o'rindan boshlab aniqlaymiz (3 -> 2 -> 1)
+    let currentPlaceToDraw = 3;
 
     function initAudio() {
         if (!audioCtx) {
@@ -300,20 +315,18 @@
         const gain = audioCtx.createGain();
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.06);
-        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.06);
+        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.06);
+        osc.stop(audioCtx.currentTime + 0.05);
     }
 
     function playWinSound(place) {
         initAudio();
         if (!audioCtx) return;
-
-        // Har bir o'rin uchun har xil g'alaba ohangi
         const freqs = place === 1 ? [523.25, 659.25, 783.99, 1046.50] : [392.00, 493.88, 587.33, 783.99];
         freqs.forEach((freq, index) => {
             setTimeout(() => {
@@ -321,12 +334,12 @@
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start();
-                osc.stop(audioCtx.currentTime + 0.4);
+                osc.stop(audioCtx.currentTime + 0.3);
             }, index * 100);
         });
     }
@@ -338,7 +351,6 @@
     }
 
     function drawWheel() {
-        // Agar o'yin ketayotgan bo'lsa, qo'lda yozilgan yangi ro'yxat chizilmaydi
         const list = isSpinning ? activeParticipants : getOptions();
         const numSegments = list.length;
         const radius = canvas.width / 2;
@@ -348,11 +360,17 @@
             ctx.fillStyle = '#6b7280';
             ctx.font = '16px sans-serif';
             ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
             ctx.fillText("Ro'yxat bo'sh...", radius, radius);
             return;
         }
 
         const arcSize = (2 * Math.PI) / numSegments;
+
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(currentAngleRad); // Butun canvasni aylantiramiz
+        ctx.translate(-radius, -radius);
 
         for (let i = 0; i < numSegments; i++) {
             const angle = i * arcSize;
@@ -363,7 +381,7 @@
             ctx.closePath();
             ctx.fill();
 
-            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.strokeStyle = 'rgba(255,255,255,0.15)';
             ctx.lineWidth = 2;
             ctx.stroke();
 
@@ -371,18 +389,23 @@
             ctx.translate(radius, radius);
             ctx.rotate(angle + arcSize / 2);
             ctx.textAlign = 'right';
+            ctx.textBaseline = 'middle';
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 13px sans-serif';
+            ctx.font = 'bold 14px sans-serif';
             
             let text = list[i];
-            if (text.length > 12) text = text.substring(0, 10) + '...';
+            if (text.length > 12) text = text.substring(0, 10) + '..';
             
-            ctx.fillText(text, radius - 20, 5);
+            ctx.fillText(text, radius - 25, 0);
             ctx.restore();
         }
+        ctx.restore();
     }
 
-    // Butun turnirni (3 ta o'rinni) boshqaradigan asosiy funksiya
+    function triggerTournament() {
+        if (!isSpinning) startTournament();
+    }
+
     function startTournament() {
         if (isSpinning) return;
 
@@ -392,16 +415,14 @@
             return;
         }
 
-        // Doskani tozalash
         document.getElementById('name-1').innerText = '-';
         document.getElementById('name-2').innerText = '-';
         document.getElementById('name-3').innerText = '-';
         
-        currentPlaceToDraw = 3; // 3-o'rindan boshlaymiz
+        currentPlaceToDraw = 3; 
         runSingleSpin();
     }
 
-    // Bitta aylantirish bosqichi
     function runSingleSpin() {
         isSpinning = true;
         spinBtn.disabled = true;
@@ -410,66 +431,77 @@
         statusBox.innerText = `🌀 ${currentPlaceToDraw}-o'rin aniqlanmoqda...`;
 
         const numSegments = activeParticipants.length;
-        const arcSize = 360 / numSegments;
-        const spinAngle = Math.floor(Math.random() * 360) + 1440; // ~4 marta to'liq aylanadi
-        const targetRotation = currentRotation + spinAngle;
+        const arcSize = (2 * Math.PI) / numSegments;
+        
+        // Tasodifiy qo'shimcha aylanish kuchi
+        const extraSpin = (Math.random() * 2 * Math.PI) + (8 * Math.PI); 
+        const startAngle = currentAngleRad;
+        const targetAngle = startAngle + extraSpin;
         
         const startTime = performance.now();
-        const duration = 4000; // Har bir aylanish 4 soniya
-        let lastTickAngle = 0;
+        const duration = 4000; 
+        let lastTickSegment = -1;
 
         function animate(timestamp) {
             const elapsed = timestamp - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            const easeOut = 1 - Math.pow(1 - progress, 3);
             
-            const currentAngle = currentRotation + (spinAngle * easeOut);
-            canvas.style.transform = `rotate(${currentAngle}deg)`;
+            // Silliq sekinlashish effekti (Cubic Ease Out)
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            currentAngleRad = startAngle + (extraSpin * easeOut);
+            
+            drawWheel();
 
-            const segmentProgress = Math.floor(currentAngle / arcSize);
-            if (segmentProgress !== lastTickAngle) {
+            // Ovoz effekti hisobi (Mil yuqorida 12 soat yo'nalishida tutilgan: -Math.PI / 2)
+            const currentPointerAngle = (-currentAngleRad - Math.PI / 2) % (2 * Math.PI);
+            const normalizedPointer = currentPointerAngle < 0 ? currentPointerAngle + (2 * Math.PI) : currentPointerAngle;
+            const currentSegment = Math.floor(normalizedPointer / arcSize) % numSegments;
+
+            if (currentSegment !== lastTickSegment && progress < 0.95) {
                 playTickSound();
-                lastTickAngle = segmentProgress;
+                lastTickSegment = currentSegment;
             }
 
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
-                currentRotation = targetRotation % 360;
+                // To'xtagan joyni normallashtirish
+                currentAngleRad = targetAngle % (2 * Math.PI);
                 
-                // G'olib indeksini hisoblash
-                const normalizedAngle = (360 - (currentRotation % 360) + 270) % 360;
-                const winnerIndex = Math.floor(normalizedAngle / arcSize) % numSegments;
+                // G'olib indeksini aniq hisoblash formula xatosi to'g'rilandi
+                const finalPointerAngle = (-currentAngleRad - Math.PI / 2) % (2 * Math.PI);
+                const finalNormalized = finalPointerAngle < 0 ? finalPointerAngle + (2 * Math.PI) : finalPointerAngle;
+                const winnerIndex = Math.floor(finalNormalized / arcSize) % numSegments;
+                
                 const winner = activeParticipants[winnerIndex];
 
-                // Shohsupaga yozish va effektlar
+                // Ekranga chiqarish
                 document.getElementById(`name-${currentPlaceToDraw}`).innerText = winner;
                 document.getElementById(`name-${currentPlaceToDraw}`).style.color = 
                     currentPlaceToDraw === 1 ? '#fcd34d' : (currentPlaceToDraw === 2 ? '#cbd5e1' : '#f97316');
 
                 playWinSound(currentPlaceToDraw);
 
-                // Har bir g'olib chiqqanda konfetti
                 confetti({
-                    particleCount: 80,
-                    spread: 60,
+                    particleCount: 60,
+                    spread: 50,
                     origin: { y: 0.6 }
                 });
 
-                // G'olibni ro'yxatdan o'chirib tashlaymiz (keyingi o'rinlar uchun qayta aylanmasligi uchun)
+                // G'olibni o'chirib, ro'yxatni yangilaymiz
                 activeParticipants.splice(winnerIndex, 1);
-                drawWheel(); // G'ildirakni yangilangan ro'yxat bilan qayta chizamiz
-
+                
                 setTimeout(() => {
                     if (currentPlaceToDraw > 1) {
                         currentPlaceToDraw--;
-                        runSingleSpin(); // Navbatdagi o'ringa o'tamiz
+                        // Keyingi bosqichdan oldin g'ildirakni yangi ismlar bilan qayta chizamiz
+                        drawWheel();
+                        runSingleSpin(); 
                     } else {
-                        // Hamma o'rinlar aniqlandi!
                         statusBox.innerText = "🏆 Musobaqa yakunlandi! Tabriklaymiz! 🏆";
                         
-                        // Final super konfetti portlashi!
-                        let end = Date.now() + (2 * 1000);
+                        // Final super salyut!
+                        let end = Date.now() + (1.5 * 1000);
                         (function frame() {
                             confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
                             confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
@@ -481,15 +513,24 @@
                         isSpinning = false;
                         spinBtn.disabled = false;
                         optionsInput.disabled = false;
+                        drawWheel();
                     }
-                }, 2000); // G'olib aniqlangandan keyin 2 soniya kutib keyingisiga o'tadi
+                }, 2000); 
             }
         }
 
         requestAnimationFrame(animate);
     }
 
-    // Ilk yuklanganda g'ildirakni chizish
+    // Matn o'zgarganda g'ildirak yangilanishi
+    optionsInput.addEventListener('input', () => {
+        if (!isSpinning) {
+            currentAngleRad = 0; // Yangi ro'yxat kiritilganda g'ildirak holatini nollaymiz
+            drawWheel();
+        }
+    });
+
+    // Ilk yuklash
     drawWheel();
 </script>
 
