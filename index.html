@@ -28,7 +28,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 15px;
+            padding: 12px;
         }
 
         .main-container {
@@ -36,7 +36,7 @@
             flex-direction: row;
             gap: 30px;
             background-color: var(--card-bg);
-            padding: 25px;
+            padding: 30px;
             border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(245, 158, 11, 0.1);
             max-width: 950px;
@@ -45,15 +45,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        @media (max-width: 850px) {
-            .main-container {
-                flex-direction: column;
-                text-align: center;
-                padding: 15px;
-            }
-        }
-
-        /* G'ildirak bo'limi mobilbop qilindi */
+        /* G'ildirak bo'limi */
         .wheel-section {
             position: relative;
             display: flex;
@@ -61,7 +53,7 @@
             align-items: center;
             flex: 1.2;
             width: 100%;
-            max-width: 380px;
+            max-width: 360px;
             margin: 0 auto;
         }
 
@@ -77,6 +69,7 @@
             border-top: 30px solid #ef4444;
             z-index: 10;
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+            display: none; /* Boshida yashirin turadi */
         }
 
         canvas {
@@ -84,7 +77,37 @@
             height: auto !important;
             border-radius: 50%;
             box-shadow: 0 0 30px rgba(245, 158, 11, 0.2), 0 0 0 8px #1f2937;
-            /* Ba'zi brauzerlardagi xatolikni oldini olish uchun CSS transition olib tashlandi */
+            display: none; /* Boshida g'ildirak yashirin */
+        }
+
+        /* Boshlang'ich holatdagi Oval / Dumaloq dizayn */
+        .placeholder-circle {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1f2937 0%, #0f172a 100%);
+            border: 6px dashed rgba(245, 158, 11, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #9ca3af;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 20px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .placeholder-circle span {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); border-color: rgba(245, 158, 11, 0.4); }
+            50% { transform: scale(0.98); border-color: rgba(245, 158, 11, 0.8); }
         }
 
         .center-circle {
@@ -104,6 +127,7 @@
             user-select: none;
             z-index: 5;
             border: 3px solid #1f2937;
+            display: none; /* Faqat g'ildirak chiqqanda ko'rinadi */
         }
 
         /* Boshqaruv bo'limi */
@@ -125,7 +149,7 @@
 
         textarea {
             width: 100%;
-            height: 100px;
+            height: 110px;
             background-color: #090d16;
             border: 2px solid #374151;
             border-radius: 14px;
@@ -142,7 +166,7 @@
         }
 
         textarea:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
@@ -174,7 +198,7 @@
             transform: none;
         }
 
-        /* Shohsupa (Podium) dizayni */
+        /* Shohsupa (Podium) */
         .podium-container {
             display: flex;
             justify-content: space-around;
@@ -183,7 +207,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 16px;
             padding: 15px 10px;
-            min-height: 150px;
+            min-height: 140px;
             margin-top: 5px;
         }
 
@@ -191,14 +215,14 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 30%;
+            width: 32%;
         }
 
         .podium-name {
             font-size: 0.85rem;
             font-weight: bold;
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             min-height: 20px;
             color: #9ca3af;
             word-break: break-all;
@@ -220,50 +244,75 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        .place-2 .podium-block {
-            height: 45px;
-            background: linear-gradient(to top, #94a3b8, #cbd5e1);
-        }
-        .place-1 .podium-block {
-            height: 75px;
-            background: linear-gradient(to top, #d97706, #fcd34d);
-        }
-        .place-3 .podium-block {
-            height: 30px;
-            background: linear-gradient(to top, #b45309, #f97316);
-        }
+        .place-2 .podium-block { height: 45px; background: linear-gradient(to top, #94a3b8, #cbd5e1); }
+        .place-1 .podium-block { height: 75px; background: linear-gradient(to top, #d97706, #fcd34d); }
+        .place-3 .podium-block { height: 32px; background: linear-gradient(to top, #b45309, #f97316); }
 
         .current-status {
             text-align: center;
             font-weight: bold;
             color: #60a5fa;
-            font-size: 1rem;
+            font-size: 0.95rem;
             min-height: 24px;
+        }
+
+        /* 📱 TELEFONLAR UCHUN MAXSUS RESPONSIVE OPTIMIZATSIYA */
+        @media (max-width: 850px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+            }
+            .main-container {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 15px;
+                gap: 20px;
+            }
+            .wheel-section {
+                max-width: 290px; /* Telefon ekraniga ixcham joylashishi uchun */
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+            .placeholder-circle {
+                font-size: 0.95rem;
+            }
+            .placeholder-circle span {
+                font-size: 1.7rem;
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="main-container">
-    <!-- Chap tomon: G'ildirak -->
+    <!-- Chap tomon: G'ildirak va Boshlang'ich dumaloq quti -->
     <div class="wheel-section">
-        <div class="pointer"></div>
+        <div class="pointer" id="wheelPointer"></div>
+        
+        <!-- Boshida turadigan chiroyli oval quti -->
+        <div class="placeholder-circle" id="placeholderBox">
+            <span>📝</span>
+            Ismlarni kiriting va turnirni boshlang!
+        </div>
+
         <canvas id="wheelCanvas" width="400" height="400"></canvas>
-        <div class="center-circle" onclick="triggerTournament()">GO!</div>
+        <div class="center-circle" id="centerGoBtn" onclick="triggerTournament()">GO!</div>
     </div>
 
     <!-- O'ng tomon: Boshqaruv va Shohsupa -->
     <div class="control-section">
         <div>
             <h1>Top-3 G'oliblar G'ildiragi</h1>
-            <p style="color: #6b7280; margin-top: 3px; font-size: 0.9rem;">Kamida 3 ta ism kiriting va o'rinlarni aniqlang!</p>
+            <p style="color: #6b7280; margin-top: 3px; font-size: 0.85rem;">Ismlarni pastga har bir qatorga bittadan yozing</p>
         </div>
 
-        <textarea id="optionsInput">Jasur&#10;Malika&#10;Sardor&#10;Kamola&#10;Diyor&#10;Madina&#10;Bobur&#10;Lola</textarea>
+        <!-- Boshida ichi bo'sh bo'ladi, foydalanuvchi o'zi kiritadi -->
+        <textarea id="optionsInput" placeholder="Jasur&#10;Malika&#10;Sardor&#10;Kamola"></textarea>
 
         <button class="spin-btn" id="spinBtn" onclick="startTournament()">Musobaqani Boshlash! 🏆</button>
 
-        <div class="current-status" id="statusBox">Tayyormisiz? Tugmani bosing!</div>
+        <div class="current-status" id="statusBox">Ismlarni yozib, tugmani bosing!</div>
 
         <!-- Shohsupa -->
         <div class="podium-container">
@@ -292,10 +341,15 @@
     const optionsInput = document.getElementById('optionsInput');
     const spinBtn = document.getElementById('spinBtn');
     const statusBox = document.getElementById('statusBox');
+    
+    // Yangi elementlar drayveri
+    const placeholderBox = document.getElementById('placeholderBox');
+    const wheelPointer = document.getElementById('wheelPointer');
+    const centerGoBtn = document.getElementById('centerGoBtn');
 
     const colors = ['#f59e0b', '#3b82f6', '#10b981', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#14b8a6'];
 
-    let currentAngleRad = 0; // Radian o'lchovida saqlaymiz
+    let currentAngleRad = 0; 
     let isSpinning = false;
     let audioCtx = null;
     
@@ -316,7 +370,7 @@
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(1000, audioCtx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
-        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
         osc.connect(gain);
         gain.connect(audioCtx.destination);
@@ -334,7 +388,7 @@
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
@@ -356,20 +410,13 @@
         const radius = canvas.width / 2;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        if (numSegments === 0) {
-            ctx.fillStyle = '#6b7280';
-            ctx.font = '16px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText("Ro'yxat bo'sh...", radius, radius);
-            return;
-        }
+        if (numSegments === 0) return;
 
         const arcSize = (2 * Math.PI) / numSegments;
 
         ctx.save();
         ctx.translate(radius, radius);
-        ctx.rotate(currentAngleRad); // Butun canvasni aylantiramiz
+        ctx.rotate(currentAngleRad); 
         ctx.translate(-radius, -radius);
 
         for (let i = 0; i < numSegments; i++) {
@@ -411,9 +458,15 @@
 
         activeParticipants = getOptions();
         if (activeParticipants.length < 3) {
-            alert("Iltimos, kamida 3 ta ishtirokchi kiriting!");
+            alert("Iltimos, kamida 3 ta ishtirokchi ismini kiriting!");
             return;
         }
+
+        // Boshlang'ich ovalni yashirib, g'ildirak interfeysini ochamiz
+        placeholderBox.style.display = 'none';
+        canvas.style.display = 'block';
+        wheelPointer.style.display = 'block';
+        centerGoBtn.style.display = 'flex';
 
         document.getElementById('name-1').innerText = '-';
         document.getElementById('name-2').innerText = '-';
@@ -433,7 +486,6 @@
         const numSegments = activeParticipants.length;
         const arcSize = (2 * Math.PI) / numSegments;
         
-        // Tasodifiy qo'shimcha aylanish kuchi
         const extraSpin = (Math.random() * 2 * Math.PI) + (8 * Math.PI); 
         const startAngle = currentAngleRad;
         const targetAngle = startAngle + extraSpin;
@@ -446,13 +498,11 @@
             const elapsed = timestamp - startTime;
             const progress = Math.min(elapsed / duration, 1);
             
-            // Silliq sekinlashish effekti (Cubic Ease Out)
             const easeOut = 1 - Math.pow(1 - progress, 3);
             currentAngleRad = startAngle + (extraSpin * easeOut);
             
             drawWheel();
 
-            // Ovoz effekti hisobi (Mil yuqorida 12 soat yo'nalishida tutilgan: -Math.PI / 2)
             const currentPointerAngle = (-currentAngleRad - Math.PI / 2) % (2 * Math.PI);
             const normalizedPointer = currentPointerAngle < 0 ? currentPointerAngle + (2 * Math.PI) : currentPointerAngle;
             const currentSegment = Math.floor(normalizedPointer / arcSize) % numSegments;
@@ -465,17 +515,14 @@
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
-                // To'xtagan joyni normallashtirish
                 currentAngleRad = targetAngle % (2 * Math.PI);
                 
-                // G'olib indeksini aniq hisoblash formula xatosi to'g'rilandi
                 const finalPointerAngle = (-currentAngleRad - Math.PI / 2) % (2 * Math.PI);
                 const finalNormalized = finalPointerAngle < 0 ? finalPointerAngle + (2 * Math.PI) : finalPointerAngle;
                 const winnerIndex = Math.floor(finalNormalized / arcSize) % numSegments;
                 
                 const winner = activeParticipants[winnerIndex];
 
-                // Ekranga chiqarish
                 document.getElementById(`name-${currentPlaceToDraw}`).innerText = winner;
                 document.getElementById(`name-${currentPlaceToDraw}`).style.color = 
                     currentPlaceToDraw === 1 ? '#fcd34d' : (currentPlaceToDraw === 2 ? '#cbd5e1' : '#f97316');
@@ -488,19 +535,16 @@
                     origin: { y: 0.6 }
                 });
 
-                // G'olibni o'chirib, ro'yxatni yangilaymiz
                 activeParticipants.splice(winnerIndex, 1);
                 
                 setTimeout(() => {
                     if (currentPlaceToDraw > 1) {
                         currentPlaceToDraw--;
-                        // Keyingi bosqichdan oldin g'ildirakni yangi ismlar bilan qayta chizamiz
                         drawWheel();
                         runSingleSpin(); 
                     } else {
                         statusBox.innerText = "🏆 Musobaqa yakunlandi! Tabriklaymiz! 🏆";
                         
-                        // Final super salyut!
                         let end = Date.now() + (1.5 * 1000);
                         (function frame() {
                             confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
@@ -513,6 +557,8 @@
                         isSpinning = false;
                         spinBtn.disabled = false;
                         optionsInput.disabled = false;
+                        
+                        // Turnir tugagach g'ildirakni tozalab boshlang'ich holatga qaytarish mumkin
                         drawWheel();
                     }
                 }, 2000); 
@@ -521,17 +567,6 @@
 
         requestAnimationFrame(animate);
     }
-
-    // Matn o'zgarganda g'ildirak yangilanishi
-    optionsInput.addEventListener('input', () => {
-        if (!isSpinning) {
-            currentAngleRad = 0; // Yangi ro'yxat kiritilganda g'ildirak holatini nollaymiz
-            drawWheel();
-        }
-    });
-
-    // Ilk yuklash
-    drawWheel();
 </script>
 
 </body>
