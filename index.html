@@ -80,7 +80,7 @@
             display: none;
         }
 
-        /* Siz aytgan mukammal Dumaloq Oval quti */
+        /* Chiroyli Dumaloq Oval quti */
         .placeholder-circle {
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -268,7 +268,6 @@
 <body>
 
 <div class="main-container">
-    <!-- Chap tomon: Faqat siz xohlagan chiroyli oval quti turadi -->
     <div class="wheel-section">
         <div class="pointer" id="wheelPointer"></div>
         
@@ -281,7 +280,6 @@
         <div class="center-circle" id="centerGoBtn" onclick="triggerTournament()">GO!</div>
     </div>
 
-    <!-- O'ng tomon: Boshqaruv elementlari -->
     <div class="control-section">
         <div>
             <h1>Top-3 G'oliblar G'ildiragi</h1>
@@ -292,7 +290,6 @@
         <button class="spin-btn" id="spinBtn" onclick="startTournament()">Musobaqani Boshlash! 🏆</button>
         <div class="current-status" id="statusBox">Ismlarni yozib, tugmani bosing!</div>
 
-        <!-- Shohsupa (Podium) -->
         <div class="podium-container">
             <div class="podium-place place-2">
                 <div class="podium-name" id="name-2">-</div>
@@ -409,6 +406,24 @@
 
         if (numSegments === 0) return;
 
+        // Agar atiga 1 ta ism bo'lsa, g'ildirak chizib o'tirmaymiz (xunuk ko'rinmasligi uchun)
+        if (numSegments === 1) {
+            ctx.beginPath();
+            ctx.fillStyle = colors[0];
+            ctx.arc(radius, radius, radius - 5, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.save();
+            ctx.translate(radius, radius);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px sans-serif';
+            ctx.fillText(list[0], 0, 0);
+            ctx.restore();
+            return;
+        }
+
         const arcSize = (2 * Math.PI) / numSegments;
 
         ctx.save();
@@ -435,12 +450,14 @@
             ctx.textAlign = 'right';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 15px sans-serif';
+            ctx.font = 'bold 16px sans-serif';
             
             let text = list[i];
             if (text.length > 12) text = text.substring(0, 10) + '..';
             
-            ctx.fillText(text, radius - 25, 0);
+            // 2 ta element bo'lganda yozuvlar chiroyli chiqishi uchun suramiz
+            const textX = numSegments === 2 ? radius - 40 : radius - 25;
+            ctx.fillText(text, textX, 0);
             ctx.restore();
         }
         ctx.restore();
@@ -459,15 +476,29 @@
             return;
         }
 
-        // Faqat mana shu joyda turnir boshlanganda g'ildirak ko'rinadi
+        document.getElementById('name-1').innerText = '-';
+        document.getElementById('name-2').innerText = '-';
+        document.getElementById('name-3').innerText = '-';
+
+        // AGAR FAQAT 1 TA ISM BO'LSA - AYLANMASDAN TO'G'RIDAN-TO'G'RI G'OLIB QILAMIZ!
+        if (originalCount === 1) {
+            const winner = activeParticipants[0];
+            document.getElementById('name-1').innerText = winner;
+            document.getElementById('name-1').style.color = '#fcd34d';
+            
+            statusBox.innerText = "🏆 Musobaqa yakunlandi! Tabriklaymiz! 🏆";
+            playWinSound(1);
+            playCelebrationSound();
+            
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            return;
+        }
+
+        // Ko'p ism bo'lsa interfeys ochiladi
         placeholderBox.style.display = 'none';
         canvas.style.display = 'block';
         wheelPointer.style.display = 'block';
         centerGoBtn.style.display = 'flex';
-
-        document.getElementById('name-1').innerText = '-';
-        document.getElementById('name-2').innerText = '-';
-        document.getElementById('name-3').innerText = '-';
         
         currentPlaceToDraw = Math.min(3, originalCount);
         runSingleSpin();
@@ -562,8 +593,6 @@
         }
         requestAnimationFrame(animate);
     }
-
-    // Ism yozayotganda ham orqa fonda g'ildirak chizilmaydi, faqat 'ISM TANLANG' vizuali saqlanib qoladi!
 </script>
 
 </body>
